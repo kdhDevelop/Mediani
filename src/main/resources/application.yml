@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Mediani
+  profiles:
+    include:
+      - mysql-database
+  servlet:
+    multipart:
+      max-file-size: 256MB
+      max-request-size: 256MB
+server:
+  forward-headers-strategy: native
+  port: 8080
+  servlet:
+    session:
+      timeout: 720m
