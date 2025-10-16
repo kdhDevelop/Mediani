@@ -3,7 +3,6 @@ package com.kdedevelop.mediani.user.adapter.out;
 import com.kdedevelop.mediani.user.adapter.out.jpa.UserJpaEntity;
 import com.kdedevelop.mediani.user.adapter.out.jpa.UserJpaRepository;
 import com.kdedevelop.mediani.user.adapter.out.mapper.UserOutBoundMapper;
-import com.kdedevelop.mediani.user.application.port.in.usecase.UserFindLatestIdUseCase;
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserLoginFindLatestPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserFindLatestIdUseCase {
+public class UserLoginFindLatestPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserFindLatestIdPort {
     private final UserJpaRepository userRepository;
 
     @Override
@@ -59,6 +58,6 @@ public class UserLoginFindLatestPersistenceAdapter implements UserRegisterPort, 
     @Override
     public int getLastUserId() {
         Optional<UserJpaEntity> user = userRepository.findTopByOrderByIdDesc();
-        return user.isPresent() ? user.get().getId() : 0;
+        return user.map(UserJpaEntity::getId).orElse(0);
     }
 }

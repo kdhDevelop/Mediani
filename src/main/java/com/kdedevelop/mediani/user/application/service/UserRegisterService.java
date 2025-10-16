@@ -1,7 +1,7 @@
 package com.kdedevelop.mediani.user.application.service;
 
 import com.kdedevelop.mediani.user.application.port.in.command.UserRegisterCommand;
-import com.kdedevelop.mediani.user.application.port.in.usecase.UserFindLatestIdUseCase;
+import com.kdedevelop.mediani.user.application.port.out.UserFindLatestIdPort;
 import com.kdedevelop.mediani.user.application.port.in.usecase.UserLoginIdDuplicateCheckUseCase;
 import com.kdedevelop.mediani.user.application.port.in.usecase.UserRegisterUseCase;
 import com.kdedevelop.mediani.user.application.port.out.*;
@@ -21,11 +21,11 @@ public class UserRegisterService implements UserRegisterUseCase, UserLoginIdDupl
     private final UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort;
     private final AtomicInteger userIdGenerator;
 
-    public UserRegisterService(@Autowired PasswordEncoder passwordEncoder, @Autowired UserRegisterPort userRegisterPort, @Autowired UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort, @Autowired UserFindLatestIdUseCase userFindLatestIdUseCase) {
+    public UserRegisterService(@Autowired PasswordEncoder passwordEncoder, @Autowired UserRegisterPort userRegisterPort, @Autowired UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort, @Autowired UserFindLatestIdPort userFindLatestIdPort) {
         this.passwordEncoder = passwordEncoder;
         this.userRegisterPort = userRegisterPort;
         this.userLoginIdDuplicateCheckPort = userLoginIdDuplicateCheckPort;
-        this.userIdGenerator = new AtomicInteger(userFindLatestIdUseCase.getLastUserId() + 1);
+        this.userIdGenerator = new AtomicInteger(userFindLatestIdPort.getLastUserId() + 1);
     }
 
     @Override
