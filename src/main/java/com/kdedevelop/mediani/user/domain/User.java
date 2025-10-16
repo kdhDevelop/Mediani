@@ -55,12 +55,8 @@ public class User {
         this.expiredAt = expiredAt;
     }
 
-    public void lock() {
-        this.lock = true;
-    }
-
-    public void unlock() {
-        this.lock = false;
+    public void updateLock(boolean lock) {
+        this.lock = lock;
     }
 
     public void delete() {
