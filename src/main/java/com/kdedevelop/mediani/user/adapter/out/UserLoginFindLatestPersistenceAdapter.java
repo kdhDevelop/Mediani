@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserLoginFindLatestPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserFindLatestIdPort {
+public class UserLoginFindLatestPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserFindLatestIdPort, UserUpdateLockStatePort, UserUpdateRolePort, UserUpdateExpiredAtPort {
     private final UserJpaRepository userRepository;
 
     @Override
@@ -59,5 +59,23 @@ public class UserLoginFindLatestPersistenceAdapter implements UserRegisterPort, 
     public int getLastUserId() {
         Optional<UserJpaEntity> user = userRepository.findTopByOrderByIdDesc();
         return user.map(UserJpaEntity::getId).orElse(0);
+    }
+
+    @Override
+    public void updateExpiredAt(User user) {
+        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userJpaEntity);
+    }
+
+    @Override
+    public void updateLockState(User user) {
+        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userJpaEntity);
+    }
+
+    @Override
+    public void updateRole(User user) {
+        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userJpaEntity);
     }
 }

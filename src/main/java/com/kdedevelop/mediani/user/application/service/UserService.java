@@ -1,11 +1,7 @@
 package com.kdedevelop.mediani.user.application.service;
 
-import com.kdedevelop.mediani.user.application.port.in.command.UserDeleteCommand;
-import com.kdedevelop.mediani.user.application.port.in.command.UserUpdateCommand;
-import com.kdedevelop.mediani.user.application.port.in.command.UserUpdatePasswordCommand;
-import com.kdedevelop.mediani.user.application.port.in.usecase.UserDeleteUseCase;
-import com.kdedevelop.mediani.user.application.port.in.usecase.UserUpdatePasswordUseCase;
-import com.kdedevelop.mediani.user.application.port.in.usecase.UserUpdateUseCase;
+import com.kdedevelop.mediani.user.application.port.in.command.*;
+import com.kdedevelop.mediani.user.application.port.in.usecase.*;
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
 
@@ -14,13 +10,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserUpdateUseCase, UserUpdatePasswordUseCase, UserDeleteUseCase {
+public class UserService implements UserUpdateUseCase, UserUpdatePasswordUseCase, UserDeleteUseCase, UserUpdateRoleUseCase, UserUpdateExpiredAtUseCase, UserUpdateLockStateUseCase {
     private final PasswordEncoder passwordEncoder;
+
     private final UserFindByIdPort userFindByIdPort;
     private final UserUpdatePort userUpdatePort;
     private final UserUpdatePasswordPort userUpdatePasswordPort;
+    private final UserUpdateExpiredAtPort userUpdateExpiredAtPort;
+    private final UserUpdateLockStatePort userUpdateLockStatePort;
+    private final UserUpdateRolePort userUpdateRolePort;
     private final UserDeletePort userDeletePort;
 
     @Override
@@ -32,6 +34,7 @@ public class UserService implements UserUpdateUseCase, UserUpdatePasswordUseCase
     }
 
     @Override
+    @Transactional
     public void updatePassword(UserUpdatePasswordCommand command) {
         User user = userFindByIdPort.findById(command.id());
         String oldPassword = command.oldPassword();
@@ -45,6 +48,7 @@ public class UserService implements UserUpdateUseCase, UserUpdatePasswordUseCase
     }
 
     @Override
+    @Transactional
     public void delete(UserDeleteCommand command) {
         User user = userFindByIdPort.findById(command.id());
         String password = command.password();
@@ -53,5 +57,32 @@ public class UserService implements UserUpdateUseCase, UserUpdatePasswordUseCase
 
         user.delete();
         userDeletePort.delete(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateExpiredAt(UserUpdateExpiredAtCommand command) {
+        User user = userFindByIdPort.findById(command.id());
+        LocalDateTime expiredAt = command.expiredAt();
+        user.updateExpiredAt(expiredAt);
+        userUpdateExpiredAtPort.updateExpiredAt(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateLockState(UserUpdateLockStateCommand command) {
+        User user = userFindByIdPort.findById(command.id());
+        boolean lock = command.lock();
+        user.updateLock(lock);
+        userUpdateLockStatePort.updateLockState(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateRole(UserUpdateRoleCommand command) {
+        User user = userFindByIdPort.findById(command.id());
+        User.Role role = command.role();
+        user.updateRole(role);
+        userUpdateRolePort.updateRole(user);
     }
 }
