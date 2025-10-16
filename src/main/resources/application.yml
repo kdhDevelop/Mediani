@@ -8,6 +8,8 @@ spring:
     multipart:
       max-file-size: 256MB
       max-request-size: 256MB
+  security:
+    secret: 1234
 server:
   forward-headers-strategy: native
   port: 8080
