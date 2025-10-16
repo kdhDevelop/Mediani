@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class User {
     public enum Role {
-        ADMIN, USER
+        ADMIN, USER, BOT
     }
 
     public User(int id, String loginId, String password, String name, LocalDateTime expiredAt, Role role) {

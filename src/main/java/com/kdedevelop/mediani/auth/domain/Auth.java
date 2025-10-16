@@ -27,6 +27,7 @@ public class Auth implements UserDetails {
         switch (user.getRole()) {
             case ADMIN: authorityList.add(makeRole(User.Role.USER));
             case USER: authorityList.add(makeRole(User.Role.ADMIN));
+            case BOT : authorityList.add(makeRole(User.Role.BOT));
         }
         return authorityList;
     }

@@ -45,7 +45,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/register/**").permitAll()
                                 .requestMatchers("/favicon.ico", "/manifest.json", "/logo192.png", "/logo512.png", "/robots.txt").permitAll()
                                 .requestMatchers("/api/admin/**", "/admin/**", "/admin", "/index-update").hasRole(User.Role.ADMIN.name())
-                                .requestMatchers("/api/user/**").hasRole(User.Role.USER.name())
+                                .requestMatchers("/api/user/**", "/user/**", "/user").hasRole(User.Role.USER.name())
+                                .requestMatchers("/api/bot/**", "/bot/**", "/bot").hasRole(User.Role.BOT.name())
                                 .anyRequest().denyAll()
                 )
                 .exceptionHandling(
