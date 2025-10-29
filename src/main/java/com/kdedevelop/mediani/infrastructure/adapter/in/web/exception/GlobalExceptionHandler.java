@@ -1,5 +1,6 @@
 package com.kdedevelop.mediani.infrastructure.adapter.in.web.exception;
 
+import com.kdedevelop.mediani.common.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

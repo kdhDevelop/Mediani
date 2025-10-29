@@ -1,6 +1,6 @@
 package com.kdedevelop.mediani.user.adapter.out;
 
-import com.kdedevelop.mediani.infrastructure.adapter.in.web.exception.EntityNotFoundException;
+import com.kdedevelop.mediani.common.EntityNotFoundException;
 import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoEntity;
 import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoRepository;
 import com.kdedevelop.mediani.user.adapter.out.mapper.UserOutBoundMapper;

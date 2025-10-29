@@ -1,4 +1,4 @@
-package com.kdedevelop.mediani.infrastructure.adapter.in.web.exception;
+package com.kdedevelop.mediani.common;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
