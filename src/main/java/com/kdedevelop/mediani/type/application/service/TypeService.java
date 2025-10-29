@@ -4,23 +4,14 @@ import com.kdedevelop.mediani.type.application.port.in.command.*;
 import com.kdedevelop.mediani.type.application.port.in.usecase.*;
 import com.kdedevelop.mediani.type.application.port.out.*;
 import com.kdedevelop.mediani.type.domain.Type;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeSearchByNameContainedUseCase, TypeUpdateUseCase, TypeDeleteUseCase {
-
-    public TypeService(@Autowired TypeCreatePort typeCreatePort, @Autowired TypeReadPort typeReadPort, @Autowired TypeDeletePort typeDeletePort, @Autowired TypeGenerateIdPort typeGenerateIdPort, @Autowired TypeSearchByNameContainedPort typeSearchByNameContainedPort, @Autowired TypeUpdatePort typeUpdatePort) {
-        this.typeGenerateIdPort = typeGenerateIdPort;
-        this.typeCreatePort = typeCreatePort;
-        this.typeReadPort = typeReadPort;
-        this.typeSearchByNameContainedPort = typeSearchByNameContainedPort;
-        this.typeUpdatePort = typeUpdatePort;
-        this.typeDeletePort = typeDeletePort;
-    }
-
 
     private final TypeGenerateIdPort typeGenerateIdPort;
     private final TypeCreatePort typeCreatePort;
