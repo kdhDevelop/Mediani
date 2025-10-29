@@ -1,6 +1,6 @@
 package com.kdedevelop.mediani.user.adapter.out.mapper;
 
-import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoEntity;
+import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoEntity;
 import com.kdedevelop.mediani.user.domain.User;
 
 public class UserOutBoundMapper {

@@ -1,8 +1,8 @@
 package com.kdedevelop.mediani.user.adapter.out;
 
 import com.kdedevelop.mediani.common.EntityNotFoundException;
-import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoEntity;
-import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoRepository;
+import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoEntity;
+import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoRepository;
 import com.kdedevelop.mediani.user.adapter.out.mapper.UserOutBoundMapper;
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
@@ -57,8 +57,8 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
 
     @Override
     public int getLastUserId() {
-        Optional<UserMongoEntity> user = userRepository.findTopByOrderByIdDesc();
-        return user.map(UserMongoEntity::getId).orElse(0);
+        Optional<UserMongoEntity> entity = userRepository.findTopByOrderByIdDesc();
+        return entity.isPresent() ? entity.get().getId() : -1;
     }
 
     @Override

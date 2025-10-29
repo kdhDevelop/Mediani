@@ -1,4 +1,4 @@
-package com.kdedevelop.mediani.user.adapter.out.jpa;
+package com.kdedevelop.mediani.user.adapter.out.mongo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
