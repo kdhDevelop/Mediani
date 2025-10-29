@@ -1,20 +1,28 @@
 package com.kdedevelop.mediani.user.adapter.out;
 
 import com.kdedevelop.mediani.common.EntityNotFoundException;
+import com.kdedevelop.mediani.infrastructure.adapter.out.generator.IntegerIdGenerator;
 import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoEntity;
 import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoRepository;
 import com.kdedevelop.mediani.user.adapter.out.mapper.UserOutBoundMapper;
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserFindLatestIdPort, UserUpdateLockStatePort, UserUpdateRolePort, UserUpdateExpiredAtPort {
+public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserGenerateIdPort, UserUpdateLockStatePort, UserUpdateRolePort, UserUpdateExpiredAtPort {
     private final UserMongoRepository userRepository;
+    private final IntegerIdGenerator idGenerator;
+
+    public UserPersistenceAdapter(@Autowired UserMongoRepository userRepository) {
+        this.userRepository = userRepository;
+
+        Optional<UserMongoEntity> entity = userRepository.findFirstByOrderByIdDesc();
+        this.idGenerator = new IntegerIdGenerator(entity.isPresent() ? entity.get().getId() : -1);
+    }
 
     @Override
     public void register(User user) {
@@ -56,9 +64,8 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
     }
 
     @Override
-    public int getLastUserId() {
-        Optional<UserMongoEntity> entity = userRepository.findTopByOrderByIdDesc();
-        return entity.isPresent() ? entity.get().getId() : -1;
+    public int generate() {
+        return idGenerator.generate();
     }
 
     @Override
