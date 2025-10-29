@@ -7,24 +7,18 @@ import com.kdedevelop.mediani.user.application.port.in.usecase.UserRegisterUseCa
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class UserRegisterService implements UserRegisterUseCase, UserLoginIdDuplicateCheckUseCase {
     private final PasswordEncoder passwordEncoder;
     private final UserGenerateIdPort userGenerateIdPort;
     private final UserRegisterPort userRegisterPort;
     private final UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort;
-
-    public UserRegisterService(@Autowired PasswordEncoder passwordEncoder, @Autowired UserRegisterPort userRegisterPort, @Autowired UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort, @Autowired UserGenerateIdPort userGenerateIdPort) {
-        this.passwordEncoder = passwordEncoder;
-        this.userGenerateIdPort = userGenerateIdPort;
-        this.userRegisterPort = userRegisterPort;
-        this.userLoginIdDuplicateCheckPort = userLoginIdDuplicateCheckPort;
-    }
 
     @Override
     @Transactional
