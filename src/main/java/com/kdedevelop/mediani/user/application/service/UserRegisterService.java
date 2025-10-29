@@ -22,7 +22,7 @@ public class UserRegisterService implements UserRegisterUseCase, UserLoginIdDupl
     private final UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort;
 
     public UserRegisterService(@Autowired PasswordEncoder passwordEncoder, @Autowired UserRegisterPort userRegisterPort, @Autowired UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort, @Autowired UserFindLatestIdPort userFindLatestIdPort) {
-        this.idGenerator = new IntegerIdGenerator(userFindLatestIdPort.getLastUserId() + 1);
+        this.idGenerator = new IntegerIdGenerator(userFindLatestIdPort.getLastUserId());
         this.passwordEncoder = passwordEncoder;
         this.userRegisterPort = userRegisterPort;
         this.userLoginIdDuplicateCheckPort = userLoginIdDuplicateCheckPort;
