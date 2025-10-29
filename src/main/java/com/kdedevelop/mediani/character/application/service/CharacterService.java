@@ -33,7 +33,8 @@ public class CharacterService implements CharacterCreateUseCase, CharacterReadUs
 
     @Override
     public void update(CharacterUpdateCommand command) {
-        Character character = new Character(command.id(), command.name());
+        Character character = characterReadByIdPort.read(command.id());
+        character.update(command.name());
         characterUpdatePort.update(character);
     }
 

@@ -10,4 +10,8 @@ import lombok.NoArgsConstructor;
 public class Type {
     private short id;
     private String name;
+
+    public void update(String name) {
+        this.name = name;
+    }
 }

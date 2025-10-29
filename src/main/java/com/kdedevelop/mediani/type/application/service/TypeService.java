@@ -42,7 +42,8 @@ public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeSear
     @Override
     @Transactional
     public void update(TypeUpdateCommand command) {
-        Type type = new Type(command.id(), command.name());
+        Type type = typeReadPort.read(command.id());
+        type.update(command.name());
         typeUpdatePort.update(type);
     }
 

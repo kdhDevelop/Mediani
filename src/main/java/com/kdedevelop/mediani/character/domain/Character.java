@@ -8,4 +8,8 @@ import lombok.Getter;
 public class Character {
     private long id;
     private String name;
+
+    public void update(String name) {
+        this.name = name;
+    }
 }
