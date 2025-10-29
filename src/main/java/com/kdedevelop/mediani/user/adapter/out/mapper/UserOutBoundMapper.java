@@ -1,14 +1,14 @@
 package com.kdedevelop.mediani.user.adapter.out.mapper;
 
-import com.kdedevelop.mediani.user.adapter.out.jpa.UserJpaEntity;
+import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoEntity;
 import com.kdedevelop.mediani.user.domain.User;
 
 public class UserOutBoundMapper {
-    public static User toUser(UserJpaEntity userJpaEntity) {
-        return new User(userJpaEntity.getId(), userJpaEntity.getLoginId(), userJpaEntity.getPassword(), userJpaEntity.getName(), userJpaEntity.getExpiredAt(), userJpaEntity.getCreatedAt(), userJpaEntity.getUpdatedAt(), userJpaEntity.isEnable(), userJpaEntity.isLock(), userJpaEntity.getRole());
+    public static User toUser(UserMongoEntity userMongoEntity) {
+        return new User(userMongoEntity.getId(), userMongoEntity.getLoginId(), userMongoEntity.getPassword(), userMongoEntity.getName(), userMongoEntity.getExpiredAt(), userMongoEntity.getCreatedAt(), userMongoEntity.getUpdatedAt(), userMongoEntity.isEnable(), userMongoEntity.isLock(), User.Role.valueOf(userMongoEntity.getRole()));
     }
 
-    public static UserJpaEntity toUserJpaEntity(User user) {
-        return new UserJpaEntity(user.getId(), user.getLoginId(), user.getPassword(), user.getName(), user.getExpiredAt(), user.getCreatedAt(), user.getUpdatedAt(), user.isEnable(), user.isLock(), user.getRole());
+    public static UserMongoEntity toUserJpaEntity(User user) {
+        return new UserMongoEntity(user.getId(), user.getLoginId(), user.getPassword(), user.getName(), user.getExpiredAt(), user.getCreatedAt(), user.getUpdatedAt(), user.isEnable(), user.isLock(), user.getRole().name());
     }
 }

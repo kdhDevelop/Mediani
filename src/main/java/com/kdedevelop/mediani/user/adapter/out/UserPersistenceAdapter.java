@@ -1,11 +1,11 @@
 package com.kdedevelop.mediani.user.adapter.out;
 
-import com.kdedevelop.mediani.user.adapter.out.jpa.UserJpaEntity;
-import com.kdedevelop.mediani.user.adapter.out.jpa.UserJpaRepository;
+import com.kdedevelop.mediani.infrastructure.adapter.in.web.exception.EntityNotFoundException;
+import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoEntity;
+import com.kdedevelop.mediani.user.adapter.out.jpa.UserMongoRepository;
 import com.kdedevelop.mediani.user.adapter.out.mapper.UserOutBoundMapper;
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserFindLatestIdPort, UserUpdateLockStatePort, UserUpdateRolePort, UserUpdateExpiredAtPort {
-    private final UserJpaRepository userRepository;
+    private final UserMongoRepository userRepository;
 
     @Override
     public void register(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
 
     @Override
     public void update(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 
     @Override
@@ -45,37 +45,37 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
 
     @Override
     public void updatePassword(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 
     @Override
     public void delete(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 
     @Override
     public int getLastUserId() {
-        Optional<UserJpaEntity> user = userRepository.findTopByOrderByIdDesc();
-        return user.map(UserJpaEntity::getId).orElse(0);
+        Optional<UserMongoEntity> user = userRepository.findTopByOrderByIdDesc();
+        return user.map(UserMongoEntity::getId).orElse(0);
     }
 
     @Override
     public void updateExpiredAt(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 
     @Override
     public void updateLockState(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 
     @Override
     public void updateRole(User user) {
-        UserJpaEntity userJpaEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userJpaEntity);
+        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
+        userRepository.save(userMongoEntity);
     }
 }

@@ -3,7 +3,7 @@ spring:
     name: Mediani
   profiles:
     include:
-      - mysql-database
+      - mongo-database
   servlet:
     multipart:
       max-file-size: 256MB
