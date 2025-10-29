@@ -29,7 +29,7 @@ public class UserRegisterService implements UserRegisterUseCase, UserLoginIdDupl
     @Override
     @Transactional
     public void register(UserRegisterCommand command) {
-        User user = new User(userGenerateIdPort.generate(), command.loginId(), passwordEncoder.encode(command.password()), command.name(), command.expiredAt(), command.role());
+        User user = new User(userGenerateIdPort.generateId(), command.loginId(), passwordEncoder.encode(command.password()), command.name(), command.expiredAt(), command.role());
         userRegisterPort.register(user);
     }
 

@@ -64,7 +64,7 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
     }
 
     @Override
-    public int generate() {
+    public int generateId() {
         return idGenerator.generate();
     }
 
