@@ -1,5 +1,6 @@
 package com.kdedevelop.mediani.type.application.service;
 
+import com.kdedevelop.mediani.common.EntityNotFoundException;
 import com.kdedevelop.mediani.type.application.port.in.command.*;
 import com.kdedevelop.mediani.type.application.port.in.usecase.*;
 import com.kdedevelop.mediani.type.application.port.out.*;
@@ -9,13 +10,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
-public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeSearchByNameContainedUseCase, TypeUpdateUseCase, TypeDeleteUseCase {
+public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeReadOrCreateByNameUseCase, TypeSearchByNameContainedUseCase, TypeUpdateUseCase, TypeDeleteUseCase {
 
     private final TypeGenerateIdPort typeGenerateIdPort;
     private final TypeCreatePort typeCreatePort;
-    private final TypeReadPort typeReadPort;
+    private final TypeReadByIdPort typeReadByIdPort;
+    private final TypeReadByNamePort typeReadByNamePort;
     private final TypeSearchByNameContainedPort typeSearchByNameContainedPort;
     private final TypeUpdatePort typeUpdatePort;
     private final TypeDeletePort typeDeletePort;
@@ -30,7 +34,7 @@ public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeSear
     @Override
     @Transactional(readOnly = true)
     public Type read(TypeReadCommand command) {
-        return typeReadPort.read(command.id());
+        return typeReadByIdPort.readById(command.id()).orElseThrow(() -> new EntityNotFoundException("type id : " + command.id() + " not found"));
     }
 
     @Override
@@ -42,7 +46,7 @@ public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeSear
     @Override
     @Transactional
     public void update(TypeUpdateCommand command) {
-        Type type = typeReadPort.read(command.id());
+        Type type = typeReadByIdPort.readById(command.id()).orElseThrow(() -> new EntityNotFoundException("type id : " + command.id() + " not found"));
         type.update(command.name());
         typeUpdatePort.update(type);
     }
@@ -51,5 +55,18 @@ public class TypeService implements TypeCreateUseCase, TypeReadUseCase, TypeSear
     @Transactional
     public void delete(TypeDeleteCommand command) {
         typeDeletePort.delete(command.id());
+    }
+
+    @Override
+    @Transactional
+    public Type readOrCreateByName(TypeReadOrCreateByNameCommand command) {
+        Optional<Type> type = typeReadByNamePort.readByName(command.name());
+        if (type.isEmpty()) {
+            try {
+                typeCreatePort.create(new Type(typeGenerateIdPort.generateId(), command.name()));
+            } catch (Exception ignore) {}
+            type = typeReadByNamePort.readByName(command.name());
+        }
+        return type.orElseThrow(() -> new IllegalStateException("Type name : " + command.name() + "not found"));
     }
 }

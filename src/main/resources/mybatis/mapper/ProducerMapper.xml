@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.producer.adapter.out.mybatis.ProducerMyBatisRepository">
+    <resultMap id="producerResultMap" type="ProducerMyBatisEntity">
+        <id property="id" column="producer_id"/>
+        <result property="name" column="producer_name"/>
+    </resultMap>
+
+    <!-- CREATE -->
+    <insert id="create" parameterType="ProducerMyBatisEntity">
+        INSERT INTO `producer` (id, name)
+        VALUES (#{producer.id}, #{producer.name})
+    </insert>
+
+    <!-- READ by ID -->
+    <select id="readById" resultMap="producerResultMap" parameterType="long">
+        SELECT id as producer_id, name as producer_name
+        FROM `producer`
+        WHERE id = #{id}
+    </select>
+
+    <!-- READ by NAME -->
+    <select id="readByName" resultMap="producerResultMap" parameterType="String">
+        SELECT id as producer_id, name as producer_name
+        FROM `producer`
+        WHERE name LIKE #{name}
+    </select>
+
+    <!-- READ first by order desc -->
+    <select id="readFirstByOrderByIdDesc" resultMap="producerResultMap">
+        SELECT id as producer_id, name as producer_name
+        FROM `producer`
+        ORDER BY id DESC
+            LIMIT 1
+    </select>
+
+    <!-- READ by name containing with pageable -->
+    <select id="readByNameContaining" resultMap="producerResultMap">
+        SELECT id as producer_id, name as producer_name
+        FROM `producer`
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.offset}
+        </if>
+    </select>
+
+    <!-- COUNT all -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*)
+        FROM `producer`
+    </select>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="ProducerMyBatisEntity">
+        UPDATE `producer`
+        SET name = #{producer.name}
+        WHERE id = #{producer.id}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM `producer`
+        WHERE id = #{id}
+    </delete>
+</mapper>

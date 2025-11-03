@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.creator.adapter.out.mybatis.CreatorMyBatisRepository">
+    <resultMap id="creatorResultMap" type="CreatorMyBatisEntity">
+        <id property="id" column="creator_id"/>
+        <result property="name" column="creator_name"/>
+    </resultMap>
+
+    <!-- CREATE -->
+    <insert id="create" parameterType="CreatorMyBatisEntity">
+        INSERT INTO `creator` (id, name)
+        VALUES (#{creator.id}, #{creator.name})
+    </insert>
+
+    <!-- READ by ID -->
+    <select id="readById" resultMap="creatorResultMap" parameterType="long">
+        SELECT id as creator_id, name as creator_name
+        FROM `creator`
+        WHERE id = #{id}
+    </select>
+
+    <!-- READ by NAME -->
+    <select id="readByName" resultMap="creatorResultMap" parameterType="String">
+        SELECT id as creator_id, name as creator_name
+        FROM `creator`
+        WHERE name LIKE #{name}
+    </select>
+
+    <!-- READ first by order desc -->
+    <select id="readFirstByOrderByIdDesc" resultMap="creatorResultMap">
+        SELECT id as creator_id, name as creator_name
+        FROM `creator`
+        ORDER BY id DESC
+            LIMIT 1
+    </select>
+
+    <!-- READ by name containing with pageable -->
+    <select id="readByNameContaining" resultMap="creatorResultMap">
+        SELECT id as creator_id, name as creator_name
+        FROM `creator`
+        WHERE creator_name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.offset}
+        </if>
+    </select>
+
+    <!-- COUNT all -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*)
+        FROM `creator`
+    </select>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="CreatorMyBatisEntity">
+        UPDATE `creator`
+        SET name = #{creator.name}
+        WHERE id = #{creator.id}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM `creator`
+        WHERE id = #{id}
+    </delete>
+</mapper>

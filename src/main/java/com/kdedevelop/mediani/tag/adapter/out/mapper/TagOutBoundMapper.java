@@ -1,14 +1,14 @@
 package com.kdedevelop.mediani.tag.adapter.out.mapper;
 
-import com.kdedevelop.mediani.tag.adapter.out.mongo.TagMongoEntity;
+import com.kdedevelop.mediani.tag.adapter.out.mybatis.TagMyBatisEntity;
 import com.kdedevelop.mediani.tag.domain.Tag;
 
 public class TagOutBoundMapper {
-    public static Tag toTag(TagMongoEntity tagMongoEntity) {
-        return new Tag(tagMongoEntity.getId(), tagMongoEntity.getName());
+    public static Tag toTag(TagMyBatisEntity tagMyBatisEntity) {
+        return new Tag(tagMyBatisEntity.getId(), tagMyBatisEntity.getName());
     }
 
-    public static TagMongoEntity toTagMongoEntity(Tag tag) {
-        return new TagMongoEntity(tag.getId(), tag.getName());
+    public static TagMyBatisEntity toTagMyBatisEntity(Tag tag) {
+        return new TagMyBatisEntity(tag.getId(), tag.getName());
     }
 }

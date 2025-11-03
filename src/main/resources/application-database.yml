@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://${DB_URL}/${DB_NAME}?serverTimezone=Asia/Seoul
+      username: ${DB_ID}
+      password: ${DB_PASSWORD}
+
+mybatis:
+  mapper-locations:
+    - classpath:mybatis/mapper/*.xml
+    - classpath:mybatis/mapper/relationship/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml

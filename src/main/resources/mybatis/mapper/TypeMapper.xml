@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.type.adapter.out.mybatis.TypeMyBatisRepository">
+    <resultMap id="typeResultMap" type="TypeMyBatisEntity">
+        <id property="id" column="type_id"/>
+        <result property="name" column="type_name"/>
+    </resultMap>
+
+    <!-- CREATE -->
+    <insert id="create" parameterType="TypeMyBatisEntity">
+        INSERT INTO `type` (id, name)
+        VALUES (#{type.id}, #{type.name})
+    </insert>
+
+    <!-- READ by ID -->
+    <select id="readById" resultMap="typeResultMap" parameterType="short">
+        SELECT id as type_id, name as type_name
+        FROM `type`
+        WHERE id = #{id}
+    </select>
+
+    <!-- READ by NAME -->
+    <select id="readByName" resultMap="typeResultMap" parameterType="String">
+        SELECT id as type_id, name as type_name
+        FROM `type`
+        WHERE name LIKE #{name}
+    </select>
+
+    <!-- READ first by order desc -->
+    <select id="readFirstByOrderByIdDesc" resultMap="typeResultMap">
+        SELECT id as type_id, name as type_name
+        FROM `type`
+        ORDER BY id DESC
+            LIMIT 1
+    </select>
+
+    <!-- READ by name containing with pageable -->
+    <select id="readByNameContaining" resultMap="typeResultMap">
+        SELECT id as type_id, name as type_name
+        FROM `type`
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.offset}
+        </if>
+    </select>
+
+    <!-- COUNT all -->
+    <select id="countAll" resultType="short">
+        SELECT COUNT(*)
+        FROM `type`
+    </select>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="TypeMyBatisEntity">
+        UPDATE `type`
+        SET name = #{type.name}
+        WHERE id = #{type.id}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="short">
+        DELETE FROM `type`
+        WHERE id = #{id}
+    </delete>
+</mapper>

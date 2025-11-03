@@ -1,14 +1,14 @@
 package com.kdedevelop.mediani.language.adapter.out.mapper;
 
-import com.kdedevelop.mediani.language.adapter.out.mongo.LanguageMongoEntity;
+import com.kdedevelop.mediani.language.adapter.out.mybatis.LanguageMyBatisEntity;
 import com.kdedevelop.mediani.language.domain.Language;
 
 public class LanguageOutBoundMapper {
-    public static Language toLanguage(LanguageMongoEntity languageMongoEntity) {
-        return new Language(languageMongoEntity.getId(), languageMongoEntity.getName());
+    public static Language toLanguage(LanguageMyBatisEntity languageMyBatisEntity) {
+        return new Language(languageMyBatisEntity.getId(), languageMyBatisEntity.getName());
     }
 
-    public static LanguageMongoEntity toLanguageMongoEntity(Language language) {
-        return new LanguageMongoEntity(language.getId(), language.getName());
+    public static LanguageMyBatisEntity toLanguageMyBatisEntity(Language language) {
+        return new LanguageMyBatisEntity(language.getId(), language.getName());
     }
 }

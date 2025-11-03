@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.character.adapter.out.mybatis.CharacterMyBatisRepository">
+    <resultMap id="characterResultMap" type="CharacterMyBatisEntity">
+        <id property="id" column="character_id"/>
+        <result property="name" column="character_name"/>
+    </resultMap>
+
+    <!-- CREATE -->
+    <insert id="create" parameterType="CharacterMyBatisEntity">
+        INSERT INTO `character` (id, name)
+        VALUES (#{character.id}, #{character.name})
+    </insert>
+
+    <!-- READ by NAME -->
+    <select id="readByName" resultMap="characterResultMap" parameterType="String">
+        SELECT id as character_id, name as character_name
+        FROM `character`
+        WHERE name LIKE #{name}
+    </select>
+
+    <!-- READ by ID -->
+    <select id="readById" resultMap="characterResultMap" parameterType="long">
+        SELECT id as character_id, name as character_name
+        FROM `character`
+        WHERE id = #{id}
+    </select>
+
+    <!-- READ first by order desc -->
+    <select id="readFirstByOrderByIdDesc" resultMap="characterResultMap">
+        SELECT id as character_id, name as character_name
+        FROM `character`
+        ORDER BY id DESC
+            LIMIT 1
+    </select>
+
+    <!-- READ by name containing with pageable -->
+    <select id="readByNameContaining" resultMap="characterResultMap">
+        SELECT id as character_id, name as character_name
+        FROM `character`
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.offset}
+        </if>
+    </select>
+
+    <!-- COUNT all -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*)
+        FROM `character`
+    </select>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="CharacterMyBatisEntity">
+        UPDATE `character`
+        SET name = #{character.name}
+        WHERE id = #{character.id}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM `character`
+        WHERE id = #{id}
+    </delete>
+</mapper>

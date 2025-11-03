@@ -2,7 +2,7 @@ package com.kdedevelop.mediani.auth.application.service;
 
 import com.kdedevelop.mediani.auth.domain.Auth;
 
-import com.kdedevelop.mediani.user.application.port.out.UserFindByLoginIdPort;
+import com.kdedevelop.mediani.user.application.port.out.UserReadByLoginIdPort;
 import com.kdedevelop.mediani.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthService implements UserDetailsService {
-    private final UserFindByLoginIdPort userFindByLoginIdPort;
+    private final UserReadByLoginIdPort userReadByLoginIdPort;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userFindByLoginIdPort.findByLoginId(username);
+        User user = userReadByLoginIdPort.readByLoginId(username);
         return new Auth(user);
     }
 }

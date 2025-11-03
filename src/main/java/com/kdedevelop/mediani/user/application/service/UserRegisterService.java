@@ -17,14 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserRegisterService implements UserRegisterUseCase, UserLoginIdDuplicateCheckUseCase {
     private final PasswordEncoder passwordEncoder;
     private final UserGenerateIdPort userGenerateIdPort;
-    private final UserRegisterPort userRegisterPort;
+    private final UserCreatePort userCreatePort;
     private final UserLoginIdDuplicateCheckPort userLoginIdDuplicateCheckPort;
 
     @Override
     @Transactional
     public void register(UserRegisterCommand command) {
         User user = new User(userGenerateIdPort.generateId(), command.loginId(), passwordEncoder.encode(command.password()), command.name(), command.expiredAt(), command.role());
-        userRegisterPort.register(user);
+        userCreatePort.create(user);
     }
 
     @Override

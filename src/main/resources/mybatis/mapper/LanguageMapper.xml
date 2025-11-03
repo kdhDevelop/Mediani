@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.language.adapter.out.mybatis.LanguageMyBatisRepository">
+    <resultMap id="languageResultMap" type="LanguageMyBatisEntity">
+        <id property="id" column="language_id"/>
+        <result property="name" column="language_name"/>
+    </resultMap>
+
+    <!-- CREATE -->
+    <insert id="create" parameterType="LanguageMyBatisEntity">
+        INSERT INTO `language` (id, name)
+        VALUES (#{language.id}, #{language.name})
+    </insert>
+
+    <!-- READ by ID -->
+    <select id="readById" resultMap="languageResultMap" parameterType="short">
+        SELECT id as language_id, name as language_name
+        FROM `language`
+        WHERE id = #{id}
+    </select>
+
+    <!-- READ by NAME -->
+    <select id="readByName" resultMap="languageResultMap" parameterType="String">
+        SELECT id as language_id, name as language_name
+        FROM `language`
+        WHERE name LIKE #{name}
+    </select>
+
+    <!-- READ first by order desc -->
+    <select id="readFirstByOrderByIdDesc" resultMap="languageResultMap">
+        SELECT id as language_id, name as language_name
+        FROM `language`
+        ORDER BY id DESC
+            LIMIT 1
+    </select>
+
+    <!-- READ by name containing with pageable -->
+    <select id="readByNameContaining" resultMap="languageResultMap">
+        SELECT id as language_id, name as language_name
+        FROM `language`
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.offset}
+        </if>
+    </select>
+
+    <!-- COUNT all -->
+    <select id="countAll" resultType="short">
+        SELECT COUNT(*)
+        FROM `language`
+    </select>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="LanguageMyBatisEntity">
+        UPDATE `language`
+        SET name = #{language.name}
+        WHERE id = #{language.id}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="short">
+        DELETE FROM `language`
+        WHERE id = #{id}
+    </delete>
+</mapper>

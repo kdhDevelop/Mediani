@@ -2,11 +2,13 @@ package com.kdedevelop.mediani.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
+@ToString
 public class User {
     public enum Role {
         ADMIN, USER, BOT

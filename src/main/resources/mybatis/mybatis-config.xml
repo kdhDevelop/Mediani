@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <package name="com.kdedevelop.mediani.character.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.creator.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.group.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.language.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.media.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.producer.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.series.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.tag.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.type.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.user.adapter.out.mybatis"/>
+    </typeAliases>
+</configuration>

@@ -2,8 +2,8 @@ package com.kdedevelop.mediani.user.adapter.out;
 
 import com.kdedevelop.mediani.common.EntityNotFoundException;
 import com.kdedevelop.mediani.infrastructure.adapter.out.generator.IntegerIdGenerator;
-import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoEntity;
-import com.kdedevelop.mediani.user.adapter.out.mongo.UserMongoRepository;
+import com.kdedevelop.mediani.user.adapter.out.mybatis.UserMyBatisEntity;
+import com.kdedevelop.mediani.user.adapter.out.mybatis.UserMyBatisRepository;
 import com.kdedevelop.mediani.user.adapter.out.mapper.UserOutBoundMapper;
 import com.kdedevelop.mediani.user.application.port.out.*;
 import com.kdedevelop.mediani.user.domain.User;
@@ -13,21 +13,21 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDuplicateCheckPort, UserFindByLoginIdPort, UserFindByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserGenerateIdPort, UserUpdateLockStatePort, UserUpdateRolePort, UserUpdateExpiredAtPort {
-    private final UserMongoRepository userRepository;
+public class UserPersistenceAdapter implements UserCreatePort, UserLoginIdDuplicateCheckPort, UserReadByLoginIdPort, UserReadByIdPort, UserUpdatePort, UserUpdatePasswordPort, UserDeletePort, UserGenerateIdPort, UserUpdateLockStatePort, UserUpdateRolePort, UserUpdateExpiredAtPort {
+    private final UserMyBatisRepository userRepository;
     private final IntegerIdGenerator idGenerator;
 
-    public UserPersistenceAdapter(@Autowired UserMongoRepository userRepository) {
+    public UserPersistenceAdapter(@Autowired UserMyBatisRepository userRepository) {
         this.userRepository = userRepository;
 
-        Optional<UserMongoEntity> entity = userRepository.findFirstByOrderByIdDesc();
+        Optional<UserMyBatisEntity> entity = userRepository.readFirstByOrderByIdDesc();
         this.idGenerator = new IntegerIdGenerator(entity.isPresent() ? entity.get().getId() : -1);
     }
 
     @Override
-    public void register(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+    public void create(User user) {
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.create(userMyBatisEntity);
     }
 
     @Override
@@ -36,31 +36,31 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
     }
 
     @Override
-    public User findByLoginId(String loginId) {
-        return UserOutBoundMapper.toUser(userRepository.findByLoginId(loginId).orElseThrow(() -> new EntityNotFoundException("user login id " + loginId + " is not found.")));
+    public User readByLoginId(String loginId) {
+        return UserOutBoundMapper.toUser(userRepository.readByLoginId(loginId).orElseThrow(() -> new EntityNotFoundException("user login id " + loginId + " is not found.")));
     }
 
     @Override
     public void update(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.update(userMyBatisEntity);
     }
 
     @Override
-    public User findById(int id) {
-        return UserOutBoundMapper.toUser(userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("user id " + id + " is not found.")));
+    public User readById(int id) {
+        return UserOutBoundMapper.toUser(userRepository.readById(id).orElseThrow(() -> new EntityNotFoundException("user id " + id + " is not found.")));
     }
 
     @Override
     public void updatePassword(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.update(userMyBatisEntity);
     }
 
     @Override
     public void delete(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.update(userMyBatisEntity);
     }
 
     @Override
@@ -70,19 +70,19 @@ public class UserPersistenceAdapter implements UserRegisterPort, UserLoginIdDupl
 
     @Override
     public void updateExpiredAt(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.update(userMyBatisEntity);
     }
 
     @Override
     public void updateLockState(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.update(userMyBatisEntity);
     }
 
     @Override
     public void updateRole(User user) {
-        UserMongoEntity userMongoEntity = UserOutBoundMapper.toUserJpaEntity(user);
-        userRepository.save(userMongoEntity);
+        UserMyBatisEntity userMyBatisEntity = UserOutBoundMapper.toUserMyBatisEntity(user);
+        userRepository.update(userMyBatisEntity);
     }
 }

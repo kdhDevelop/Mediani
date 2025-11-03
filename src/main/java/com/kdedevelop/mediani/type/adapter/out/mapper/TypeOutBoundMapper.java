@@ -1,14 +1,14 @@
 package com.kdedevelop.mediani.type.adapter.out.mapper;
 
-import com.kdedevelop.mediani.type.adapter.out.mongo.TypeMongoEntity;
+import com.kdedevelop.mediani.type.adapter.out.mybatis.TypeMyBatisEntity;
 import com.kdedevelop.mediani.type.domain.Type;
 
 public class TypeOutBoundMapper {
-    public static Type toType(TypeMongoEntity typeMongoEntity) {
-        return new Type(typeMongoEntity.getId(), typeMongoEntity.getName());
+    public static Type toType(TypeMyBatisEntity typeMyBatisEntity) {
+        return new Type(typeMyBatisEntity.getId(), typeMyBatisEntity.getName());
     }
 
-    public static TypeMongoEntity toTypeJpaEntity(Type type) {
-        return new TypeMongoEntity(type.getId(), type.getName());
+    public static TypeMyBatisEntity toTypeMyBatisEntity(Type type) {
+        return new TypeMyBatisEntity(type.getId(), type.getName());
     }
 }

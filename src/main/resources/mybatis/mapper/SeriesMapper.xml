@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.series.adapter.out.mybatis.SeriesMyBatisRepository">
+    <resultMap id="seriesResultMap" type="SeriesMyBatisEntity">
+        <id property="id" column="series_id"/>
+        <result property="name" column="series_name"/>
+    </resultMap>
+
+    <!-- CREATE -->
+    <insert id="create" parameterType="SeriesMyBatisEntity">
+        INSERT INTO `series` (id, name)
+        VALUES (#{series.id}, #{series.name})
+    </insert>
+
+    <!-- READ by ID -->
+    <select id="readById" resultMap="seriesResultMap" parameterType="long">
+        SELECT id as series_id, name as series_name
+        FROM `series`
+        WHERE id = #{id}
+    </select>
+
+    <!-- READ by NAME -->
+    <select id="readByName" resultMap="seriesResultMap" parameterType="String">
+        SELECT id as series_id, name as series_name
+        FROM `series`
+        WHERE name LIKE #{name}
+    </select>
+
+    <!-- READ first by order desc -->
+    <select id="readFirstByOrderByIdDesc" resultMap="seriesResultMap">
+        SELECT id as series_id, name as series_name
+        FROM `series`
+        ORDER BY id DESC
+            LIMIT 1
+    </select>
+
+    <!-- READ by name containing with pageable -->
+    <select id="readByNameContaining" resultMap="seriesResultMap">
+        SELECT id as series_id, name as series_name
+        FROM `series`
+        WHERE name LIKE CONCAT('%', #{name}, '%')
+        ORDER BY id
+        <if test="page != null">
+            LIMIT #{page.pageSize} OFFSET #{page.offset}
+        </if>
+    </select>
+
+    <!-- COUNT all -->
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*)
+        FROM `series`
+    </select>
+
+    <!-- UPDATE -->
+    <update id="update" parameterType="SeriesMyBatisEntity">
+        UPDATE `series`
+        SET name = #{series.name}
+        WHERE id = #{series.id}
+    </update>
+
+    <!-- DELETE -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM `series`
+        WHERE id = #{id}
+    </delete>
+</mapper>
