@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdedevelop.mediani.media.adapter.out.mybatis.relationship.MediaTagMyBatisRelationshipRepository">
+    <!-- CREATE -->
+    <insert id="create">
+        INSERT INTO `media_tag` (type_id, media_id, tag_id)
+        VALUES (#{item.typeId}, #{item.mediaId}, #{item.tagId})
+    </insert>
+
+    <!-- CREATE ALL -->
+    <insert id="createAll">
+        INSERT INTO `media_tag` (type_id, media_id, tag_id)
+        VALUES
+        <foreach collection="key" item="item" separator=",">
+            (#{item.typeId}, #{item.mediaId}, #{item.tagId})
+        </foreach>
+    </insert>
+
+    <!-- DELETE -->
+    <delete id="delete">
+        DELETE FROM `media_tag`
+        WHERE type_id = #{key.typeId} AND media_id = #{key.mediaId} AND tag_id = #{key.tagId}
+    </delete>
+</mapper>
