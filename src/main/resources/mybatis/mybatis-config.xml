@@ -4,15 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <package name="com.kdedevelop.mediani.character.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.creator.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.group.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.language.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.media.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.producer.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.series.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.tag.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.type.adapter.out.mybatis"/>
-        <package name="com.kdedevelop.mediani.user.adapter.out.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.character.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.creator.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.group.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.language.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.media.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.producer.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.series.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.tag.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.type.mybatis"/>
+        <package name="com.kdedevelop.mediani.adapter.out.user.mybatis"/>
     </typeAliases>
 </configuration>

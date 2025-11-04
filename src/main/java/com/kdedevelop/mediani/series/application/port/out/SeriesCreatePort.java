@@ -1,7 +1,0 @@
-package com.kdedevelop.mediani.series.application.port.out;
-
-import com.kdedevelop.mediani.series.domain.Series;
-
-public interface SeriesCreatePort {
-    void create(Series series);
-}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kdedevelop.mediani.tag.adapter.out.mybatis.TagMyBatisRepository">
+<mapper namespace="com.kdedevelop.mediani.adapter.out.tag.mybatis.TagMyBatisRepository">
     <resultMap id="tagResultMap" type="TagMyBatisEntity">
         <id property="id" column="tag_id"/>
         <result property="name" column="tag_name"/>

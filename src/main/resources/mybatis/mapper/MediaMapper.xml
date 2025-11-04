@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kdedevelop.mediani.media.adapter.out.mybatis.MediaMyBatisRepository">
+<mapper namespace="com.kdedevelop.mediani.adapter.out.media.mybatis.MediaMyBatisRepository">
     <resultMap id="mediaResultMap" type="MediaMyBatisEntity">
         <id property="id" column="media_id"/>
         <result property="cover" column="media_cover"/>
         <result property="title" column="media_title"/>
         <result property="createdAt" column="media_create_at"/>
         <result property="updatedAt" column="media_update_at"/>
-        <association property="type" resultMap="com.kdedevelop.mediani.type.adapter.out.mybatis.TypeMyBatisRepository.typeResultMap"/>
-        <association property="language" resultMap="com.kdedevelop.mediani.language.adapter.out.mybatis.LanguageMyBatisRepository.languageResultMap"/>
-        <collection property="character" ofType="CharacterMyBatisEntity" resultMap="com.kdedevelop.mediani.character.adapter.out.mybatis.CharacterMyBatisRepository.characterResultMap"/>
-        <collection property="creator" ofType="CreatorMyBatisEntity" resultMap="com.kdedevelop.mediani.creator.adapter.out.mybatis.CreatorMyBatisRepository.creatorResultMap"/>
-        <collection property="group" ofType="GroupMyBatisEntity" resultMap="com.kdedevelop.mediani.group.adapter.out.mybatis.GroupMyBatisRepository.groupResultMap"/>
-        <collection property="producer" ofType="ProducerMyBatisEntity" resultMap="com.kdedevelop.mediani.producer.adapter.out.mybatis.ProducerMyBatisRepository.producerResultMap"/>
-        <collection property="series" ofType="SeriesMyBatisEntity" resultMap="com.kdedevelop.mediani.series.adapter.out.mybatis.SeriesMyBatisRepository.seriesResultMap"/>
-        <collection property="tag" ofType="TagMyBatisEntity" resultMap="com.kdedevelop.mediani.tag.adapter.out.mybatis.TagMyBatisRepository.tagResultMap"/>
+        <association property="type" resultMap="com.kdedevelop.mediani.adapter.out.type.mybatis.TypeMyBatisRepository.typeResultMap"/>
+        <association property="language" resultMap="com.kdedevelop.mediani.adapter.out.language.mybatis.LanguageMyBatisRepository.languageResultMap"/>
+        <collection property="character" ofType="CharacterMyBatisEntity" resultMap="com.kdedevelop.mediani.adapter.out.character.mybatis.CharacterMyBatisRepository.characterResultMap"/>
+        <collection property="creator" ofType="CreatorMyBatisEntity" resultMap="com.kdedevelop.mediani.adapter.out.creator.mybatis.CreatorMyBatisRepository.creatorResultMap"/>
+        <collection property="group" ofType="GroupMyBatisEntity" resultMap="com.kdedevelop.mediani.adapter.out.group.mybatis.GroupMyBatisRepository.groupResultMap"/>
+        <collection property="producer" ofType="ProducerMyBatisEntity" resultMap="com.kdedevelop.mediani.adapter.out.producer.mybatis.ProducerMyBatisRepository.producerResultMap"/>
+        <collection property="series" ofType="SeriesMyBatisEntity" resultMap="com.kdedevelop.mediani.adapter.out.series.mybatis.SeriesMyBatisRepository.seriesResultMap"/>
+        <collection property="tag" ofType="TagMyBatisEntity" resultMap="com.kdedevelop.mediani.adapter.out.tag.mybatis.TagMyBatisRepository.tagResultMap"/>
     </resultMap>
     <!-- Media CRUD -->
 
