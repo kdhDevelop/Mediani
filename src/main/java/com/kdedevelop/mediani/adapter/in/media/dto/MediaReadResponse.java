@@ -17,6 +17,7 @@ public record MediaReadResponse(
           Type type,
          String cover,
          String title,
+         String description,
          Language language,
           LocalDateTime createdAt,
           LocalDateTime updatedAt,

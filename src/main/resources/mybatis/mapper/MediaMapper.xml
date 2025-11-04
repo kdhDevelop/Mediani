@@ -6,6 +6,7 @@
         <id property="id" column="media_id"/>
         <result property="cover" column="media_cover"/>
         <result property="title" column="media_title"/>
+        <result property="description" column="media_description"/>
         <result property="createdAt" column="media_create_at"/>
         <result property="updatedAt" column="media_update_at"/>
         <association property="type" resultMap="com.kdedevelop.mediani.adapter.out.type.mybatis.TypeMyBatisRepository.typeResultMap"/>
@@ -25,82 +26,85 @@
             `id`,
             `cover`,
             `title`,
+            `description`,
             `created_at`,
             `updated_at`,
             `type_id`,
             `language_id`
         ) VALUES (
-                     #{id},
-                     #{cover},
-                     #{title},
-                     #{createdAt},
-                     #{updatedAt},
-                     #{type.id},
-                     #{language.id}
+             #{id},
+             #{cover},
+             #{title},
+             #{description},
+             #{createdAt},
+             #{updatedAt},
+             #{type.id},
+             #{language.id}
                  )
     </insert>
 
     <!-- Read -->
     <select id="read" parameterType="map" resultMap="mediaResultMap">
-        SELECT
-            m.`id` AS media_id,
-            m.`cover` AS media_cover,
-            m.`title` AS media_title,
-            m.`created_at` AS media_create_at,
-            m.`updated_at` AS media_update_at,
-            -- Type association
-            t.`id` AS type_id,
-            t.`name` AS type_name,
-            -- Language association
-            l.`id` AS language_id,
-            l.`name` AS language_name,
-            -- Character collection
-            c.`id` AS character_id,
-            c.`name` AS character_name,
-            -- Creator collection
-            cr.`id` AS creator_id,
-            cr.`name` AS creator_name,
-            -- Group collection
-            g.`id` AS group_id,
-            g.`name` AS group_name,
-            -- Producer collection
-            p.`id` AS producer_id,
-            p.`name` AS producer_name,
-            -- Series collection
-            s.`id` AS series_id,
-            s.`name` AS series_name,
-            -- Tag collection
-            tg.`id` AS tag_id,
-            tg.`name` AS tag_name
-        FROM `media` m
-                 INNER JOIN `type` t ON m.`type_id` = t.`id`
-                 INNER JOIN `language` l ON m.`language_id` = l.`id`
+        SELECT `media`.`id`          AS media_id,
+               `media`.`cover`       AS media_cover,
+               `media`.`title`       AS media_title,
+               `media`.`description` AS media_description,
+               `media`.`created_at`  AS media_create_at,
+               `media`.`updated_at`  AS media_update_at,
+               -- Type association
+               `type`.`id`            AS type_id,
+               `type`.`name`          AS type_name,
+               -- Language association
+               `language`.`id`       AS language_id,
+               `language`.`name`     AS language_name,
+               -- Character collection
+               `character`.`id`      AS character_id,
+               `character`.`name`    AS character_name,
+               -- Creator collection
+               `creator`.`id`        AS creator_id,
+               `creator`.`name`      AS creator_name,
+               -- Group collection
+               `group`.`id`          AS group_id,
+               `group`.`name`        AS group_name,
+               -- Producer collection
+               `producer`.`id`       AS producer_id,
+               `producer`.`name`     AS producer_name,
+               -- Series collection
+               `series`.`id`         AS series_id,
+               `series`.`name`       AS series_name,
+               -- Tag collection
+               `tag`.`id`            AS tag_id,
+               `tag`.`name`          AS tag_name
+        FROM `media`
+                 INNER JOIN `type` ON `media`.`type_id` = `type`.`id`
+                 INNER JOIN `language` ON `media`.`language_id` = `language`.`id`
 
                  LEFT JOIN `media_character` mc
-                           ON m.`id` = mc.`media_id` AND m.`type_id` = mc.`type_id`
-                 LEFT JOIN `character` c ON mc.`character_id` = c.`id`
+                           ON `media`.`id` = mc.`media_id` AND `media`.`type_id` = mc.`type_id`
+                 LEFT JOIN `character` ON mc.`character_id` = `character`.`id`
 
                  LEFT JOIN `media_creator` mcr
-                           ON m.`id` = mcr.`media_id` AND m.`type_id` = mcr.`type_id`
-                 LEFT JOIN `creator` cr ON mcr.`creator_id` = cr.`id`
+                           ON `media`.`id` = mcr.`media_id` AND `media`.`type_id` = mcr.`type_id`
+                 LEFT JOIN `creator` ON mcr.`creator_id` = `creator`.`id`
 
                  LEFT JOIN `media_group` mg
-                           ON m.`id` = mg.`media_id` AND m.`type_id` = mg.`type_id`
-                 LEFT JOIN `group` g ON mg.`group_id` = g.`id`
+                           ON `media`.`id` = mg.`media_id` AND `media`.`type_id` = mg.`type_id`
+                 LEFT JOIN `group` ON mg.`group_id` = `group`.`id`
 
                  LEFT JOIN `media_producer` mp
-                           ON m.`id` = mp.`media_id` AND m.`type_id` = mp.`type_id`
-                 LEFT JOIN `producer` p ON mp.`producer_id` = p.`id`
+                           ON `media`.`id` = mp.`media_id` AND `media`.`type_id` = mp.`type_id`
+                 LEFT JOIN `producer` ON mp.`producer_id` = `producer`.`id`
 
                  LEFT JOIN `media_series` ms
-                           ON m.`id` = ms.`media_id` AND m.`type_id` = ms.`type_id`
-                 LEFT JOIN `series` s ON ms.`series_id` = s.`id`
+                           ON `media`.`id` = ms.`media_id` AND `media`.`type_id` = ms.`type_id`
+                 LEFT JOIN `series` ON ms.`series_id` = `series`.`id`
 
                  LEFT JOIN `media_tag` mt
-                           ON m.`id` = mt.`media_id` AND m.`type_id` = mt.`type_id`
-                 LEFT JOIN `tag` tg ON mt.`tag_id` = tg.`id`
+                           ON `media`.`id` = mt.`media_id` AND `media`.`type_id` = mt.`type_id`
+                 LEFT JOIN `tag` ON mt.`tag_id` = `tag`.`id`
 
-        WHERE m.`id` = #{mediaId} AND m.`type_id` = #{typeId}
+        WHERE `media`.`id` = #{mediaId}
+          AND `media`.`type_id` = #{typeId}
     </select>
 
     <!-- Update -->
@@ -109,6 +113,7 @@
         SET
             `cover` = #{cover},
             `title` = #{title},
+            `description` = #{description},
             `updated_at` = #{updatedAt},
             `type_id` = #{type.id},
             `language_id` = #{language.id}

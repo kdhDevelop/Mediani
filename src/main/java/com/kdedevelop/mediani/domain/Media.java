@@ -13,6 +13,7 @@ public class Media {
     private final Type type;
     private String cover;
     private String title;
+    private String description;
     private Language language;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;

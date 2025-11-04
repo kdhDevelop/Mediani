@@ -83,6 +83,7 @@ public class MediaService implements MediaCreateUseCase, MediaReadByIdUseCase {
                 type,
                 command.cover(),
                 command.title(),
+                command.description(),
                 language,
                 LocalDateTime.now(),
                 LocalDateTime.now(),

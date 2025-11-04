@@ -7,6 +7,7 @@ public record MediaCreateRequest(
         String type,
         String cover,
         String title,
+        String description,
         String language,
         List<String> character,
         List<String> creator,

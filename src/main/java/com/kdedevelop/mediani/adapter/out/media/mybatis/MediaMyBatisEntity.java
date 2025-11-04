@@ -23,6 +23,7 @@ public class MediaMyBatisEntity {
     private TypeMyBatisEntity type;
     private String cover;
     private String title;
+    private String description;
     private LanguageMyBatisEntity language;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
